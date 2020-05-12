@@ -316,7 +316,7 @@ resRe  <- rma(yi=yi, sei=sei)
 print(summary(resFe))
 print(summary(resRe))
 pdf(file = "HLA_forest_UKB.pdf", width = 8, height = 6)
-forest(resFe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.6931472), main="Meta-analysis of rs1293298",atransf=exp, xlab=paste("Odds Ratio (95%CI) for SNP",sep=""), slab=labs, mlab="Fixed Effects", col = "red", border = "red", cex=.9)
+forest(resFe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.6931472), main="Meta-analysis of DQA1_301 HLA",atransf=exp, xlab=paste("Odds Ratio (95%CI) for SNP",sep=""), slab=labs, mlab="Fixed Effects", col = "red", border = "red", cex=.9)
 dev.off()
 
 ```
