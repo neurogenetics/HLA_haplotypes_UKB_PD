@@ -5,6 +5,10 @@ May 11th 2020
 
 Cornelis, Mary, Andy, Mike
 
+####TL:DR
+One of the Parkinson Disease GWAS hits rs504594 (AKA rs112485576) is tagging the DQA1_301 HLA haplotype and this haplotype is confirmed to be the most PD associated HLA haplotype in the UK Biobank cohort.
+
+
 ```
 Summary:
 In the most recent PD GWAS (PMID: 31701892) a couple hits are in close proximity of the HLA locus.
