@@ -321,6 +321,8 @@ dev.off()
 
 ```
 
+[embed]https://github.com/neurogenetics/HLA_haplotypes_UKB_PD/blob/master/HLA_forest_UKB.pdf[/embed]
+
 
 ## Get HLA frequencies
 ### Purpose => saving the dataframes to get case/proxy/control frequencies of haplotypes
