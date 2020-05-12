@@ -1,7 +1,7 @@
 # HLA_haplotypes_UKB_PD
 Investigation of HLA haplotypes in the UK Biobank vs Parkinson's disease
 
-May 11th 2020
+May 12th 2020
 
 Cornelis, Mary, Andy, Mike
 
@@ -325,7 +325,7 @@ dev.off()
 ```
 
 <p align="center">
-  <img width="300" height="300" src="HLA_forest_UKB.png">
+  <img width="600" height="600" src="HLA_forest_UKB.png">
 </p>
 
 
