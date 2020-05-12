@@ -225,4 +225,4 @@ write.table(MERGE, "PD_testing_data_WITH_VARIANTS.txt", quote = F, sep = "\t", r
 # NOTE that DQA1_301 is protective
 ```
 
-### all done
+### All done
