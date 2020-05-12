@@ -288,10 +288,10 @@ QUIT
 
 ```
 # From metal:
-## Smallest p-value is 0.0001519 at marker 'DQA1_301'
+## Smallest p-value is 0.0001419 at marker 'DQA1_301'
 # Realistic multiple test correction:
 # 103 of HLA haplotypes tested in both PD and Proxy + with MAF of >1%
-# Bonferroni => 0.05 / 103 = 0.00049
+# Bonferroni => 0.05 / 102 = 0.00049
 # meaning that only DQA1_301 passes multiple testing correction
 ```
 
