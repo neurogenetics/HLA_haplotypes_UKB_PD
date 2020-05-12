@@ -76,15 +76,55 @@ rm tmpfile
 ### get phenotypes and covariates
 
 ### PD
-PD.txt
+```
+PD.txt => created from UKB field => 42033
+```
 
 ### PD parent
-PD_parent_no_PD.txt
+```
+PD_parent_no_PD.txt => created from UKB field => 20107 and 20110 but excluding PD cases
+```
 
 ### Covariates => PC, age, townsend
-pc.txt
-PD_grs.txt
-covariates.txt
+
+#### PC's
+```
+# creating new UKB PC's 
+module load plink
+module load R
+module load flashpca
+module load GCTA
+
+# UKBB_raw_data_no_cousins created using GCTA with 0.125 cut-off
+plink --bfile UKBB_raw_data --maf 0.05 --geno 0.05 --hwe 1E-6 --make-bed --out filter --threads 19 --memory 500000
+plink --bfile filter --indep-pairwise 50 5 0.5 --out prune --threads 19 --memory 500000
+plink --bfile filter --extract prune.prune.in --make-bed --out prune --threads 19 --memory 500000
+gcta64 --bfile prune --make-grm --out GRM_matrix --autosome --maf 0.05 --thread-num 20 
+gcta64 --grm-cutoff 0.125 --grm GRM_matrix --out GRM_matrix_0125 --make-grm --thread-num 20 
+gcta64 --bfile UKBB_raw_data --keep GRM_matrix_0125.grm.id --make-bed --out UKBB_raw_data_no_cousins --thread-num 20
+
+# then make PC's
+plink --bfile UKBB_raw_data_no_cousins --maf 0.01 --geno 0.01 --hwe 5e-6 --make-bed --out filter_better \
+--exclude range exclusion_regions_hg19.txt --memory 230000 --threads 19
+plink --bfile filter_better --indep-pairwise 1000 10 0.02 --out pruned_better_and_more --memory 230000 --threads 19
+plink --bfile filter_better --extract pruned_better_and_more.prune.in --make-bed --out input_pca --memory 230000 --threads 19
+
+# 29953 SNPs and 362788 individuals
+flashpca --bfile input_pca --suffix _testing_slurm.txt --numthreads 19
+mv pcs_testing_slurm.txt pc.txt
+```
+
+#### Covariates
+```
+covariates.txt bases on UKB fields:
+# genetic-sex = 22001
+# european = 22006
+# PC's = 22009
+# batch = 22000
+# townsend = 189
+# Year of birth = 34
+# age of recruitment = 21022
+```
 
 ## Load in R and perform analysis
 ### Purpose => loading in data to get it all in the right space
@@ -100,7 +140,7 @@ proxy_case <- fread("PD_parent_no_PD.txt",header=F)
 proxy_case$V2 <- NULL
 # COV =>    FID   IID BIRTH_YEAR TOWNSEND AGE_OF_RECRUIT BATCH GENETIC_SEX
 COV <- fread("covariates.txt",header=T)
-samples_to_keep <- fread("PD_grs.txt",header=T)
+samples_to_keep <- fread("Samples_to_keep.txt",header=T)
 samples_to_keep$IID <- NULL
 samples_to_keep$PHENO <- NULL
 samples_to_keep$CNT <- NULL
@@ -121,8 +161,8 @@ dim(PC)
 # [1] 362788     11
 # 362788 samples and 10 PC's
 dim(samples_to_keep)
-# [1] 362146      1
-# 362146 samples to keep after relatedness filtering 0.125
+# [1] 362788      1
+# 362788 samples to keep after relatedness filtering 0.125
 dim(COV)
 # [1] 502616      8
 # 502616 samples and known covariates
@@ -169,7 +209,7 @@ PD_test <- rbind(PD,controls_PD)
 Proxy_test <- rbind(proxy,controls_proxy)
 ```
 
-## Do analysis
+## Do initial HLA association analysis
 ### Purpose => perform case/proxy/control regression of HLA haplotypes 
 
 ```
@@ -182,6 +222,13 @@ summary(model1_PD)
 summary(model1_Proxy)
 
 ```
+
+## Meta-analyze HLA association analysis
+### Purpose => meta-analyze case/control and proxy/control results
+
+Work in progress
+
+Forest plot
 
 ## Get HLA frequencies
 ### Purpose => saving the dataframes to get case/proxy/control frequencies of haplotypes
