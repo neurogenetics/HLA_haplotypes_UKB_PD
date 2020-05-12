@@ -230,9 +230,84 @@ summary(model1_Proxy)
 ## Meta-analyze HLA association analysis
 ### Purpose => meta-analyze case/control and proxy/control results
 
-Work in progress
+#### Rescale proxy association results
+```
+module load python/3.7
+# python proxy_gwas_gwaxStyle.py --infile short_format.csv --beta-proxy BETA --se-proxy SE --p-proxy P --outfile remove.csv
 
-Forest plot
+python proxy_gwas_gwaxStyle.py --infile proxy_HLA_results.csv --beta-proxy Estimate --se-proxy SE --p-proxy P --outfile proxy_HLA_results_rescaled.csv
+
+```
+
+#### Meta analyze results in metal
+
+```
+module load metal
+
+# run like this:
+metal metal_HLA.txt
+
+```
+
+#### metal file looks like this:
+```
+#../generic-metal/metal metalAll.txt
+#THIS SCRIPT EXECUTES AN ANALYSIS OF EIGHT STUDIES
+#THE RESULTS FOR EACH STUDY ARE STORED IN FILES Inputfile1.txt THROUGH Inputfile8.txt
+SCHEME  STDERR
+AVERAGEFREQ ON
+MINMAXFREQ ON
+LABEL TotalSampleSize as N # If input files have a column for the sample size labeled as 'N'
+# LOAD THE FIRST SEVEN INPUT FILES
+
+# UNCOMMENT THE NEXT LINE TO ENABLE GenomicControl CORRECTION
+# GENOMICCONTROL ON
+
+# === DESCRIBE AND PROCESS THE FIRST INPUT FILE ===
+MARKER HAPLO
+# ALLELE minorAllele majorAllele
+FREQ   FREQ_CONTROL
+EFFECT Estimate
+STDERR SE
+PVALUE P
+WEIGHT N 
+PROCESS toMeta.UKB_HLA_PD_control.tab
+
+# === DESCRIBE AND PROCESS THE SECOND INPUT FILE ===
+MARKER HAPLO
+# ALLELE minorAllele majorAllele
+FREQ   FREQ_CONTROL
+EFFECT b_adjusted
+STDERR se_adjusted
+PVALUE p_derived
+WEIGHT N
+PROCESS toMeta.UKB_HLA_Proxy_control.tab
+
+OUTFILE HLA_association_UKB_PD .tbl
+ANALYZE HETEROGENEITY
+
+QUIT
+
+```
+
+#### Results and forest plot of most significant result
+
+```
+# From metal:
+## Smallest p-value is 0.0001519 at marker 'DQA1_301'
+# Realistic multiple test correction:
+# 103 of HLA haplotypes tested in both PD and Proxy + with MAF of >1%
+# Bonferroni => 0.05 / 103 = 0.00049
+# meaning that only DQA1_301 passes multiple testing correction
+```
+
+```
+# Forest plot of results
+
+
+
+```
+
 
 ## Get HLA frequencies
 ### Purpose => saving the dataframes to get case/proxy/control frequencies of haplotypes
