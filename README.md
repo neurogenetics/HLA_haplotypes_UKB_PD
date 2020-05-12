@@ -6,7 +6,7 @@ May 11th 2020
 Cornelis, Mary, Mike
 
 ## Data and description download
-### get actual data 
+### Get actual data 
 Download new data package from UKB
 
 ```
@@ -14,7 +14,7 @@ module load ukbb/0.1
 ukbunpack ukb41967.enc SECRET_KEY
 ukbconv ukb41967.enc_ukb csv
 ```
-### get header of UKB HLA file:
+### Get header of UKB HLA file:
 Resource 2182
 
 Name:HLA data headers
