@@ -8,7 +8,7 @@ Cornelis, Mary, Andy, Mike
 ```
 Summary:
 In the most recent PD GWAS (PMID: 31701892) a couple hits are in close proximity of the HLA locus.
-UKbiobank is largest semi-public genetic resource out there and has imputation HLA haplotypes available for all genotypes participants (~500K).
+UKbiobank (https://www.ukbiobank.ac.uk/) is largest semi-public genetic resource out there and has imputation HLA haplotypes available for all genotypes participants (~500K).
 Here we check:
 1) Association between HLA haplotypes and PD (and PD-proxy status => having a parent with PD) 
 2) Correlation between HLA haplotypes and the GWAS hits in the HLA locus region
