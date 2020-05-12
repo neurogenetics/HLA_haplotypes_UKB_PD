@@ -324,6 +324,8 @@ dev.off()
 
 ```
 
+#### Forest plot of most significant result
+
 <p align="center">
   <img width="600" height="600" src="HLA_forest_UKB.png">
 </p>
