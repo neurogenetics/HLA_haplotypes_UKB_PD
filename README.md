@@ -12,13 +12,14 @@ One of the Parkinson Disease GWAS hits rs504594 (AKA rs112485576) is tagging the
 ```
 Summary:
 In the most recent PD GWAS (PMID: 31701892) a couple hits are in close proximity of the HLA locus.
-UKbiobank (https://www.ukbiobank.ac.uk/) is largest semi-public genetic resource out there and has imputation HLA haplotypes available for all genotypes participants (~500K).
+UKbiobank (https://www.ukbiobank.ac.uk/) is largest semi-public genetic resource out there and 
+has imputation HLA haplotypes available for all genotypes participants (~500K).
 Here we check:
 1) Association between HLA haplotypes and PD (and PD-proxy status => having a parent with PD) 
 2) Correlation between HLA haplotypes and the GWAS hits in the HLA locus region
 
 Results:
-1) Wait on adding in until meta-analyze results
+1) Meta-analyzing association results identified DQA1_301 passing Bonferroni correction P=0.00015, OR=0.90, SE=0.0264
 2) HLA haplotype DQA1_301 is highly correclated with rs504594 (number of A alleles) with >0.95 correlation 
 
 Whats next:
@@ -303,8 +304,20 @@ QUIT
 
 ```
 # Forest plot of results
-
-
+R
+require("rmeta")
+library(metafor)
+data <- read.table("input_forest_HLA.txt", header = T)
+labs <- data$DATASET
+yi   <- data$BETA
+sei  <- data$SE
+resFe  <- rma(yi=yi, sei=sei, method="FE")
+resRe  <- rma(yi=yi, sei=sei)
+print(summary(resFe))
+print(summary(resRe))
+pdf(file = "HLA_forest_UKB.pdf", width = 8, height = 6)
+forest(resFe, xlim=c(resFe$beta-0.9931472,resFe$beta+0.6931472), main="Meta-analysis of rs1293298",atransf=exp, xlab=paste("Odds Ratio (95%CI) for SNP",sep=""), slab=labs, mlab="Fixed Effects", col = "red", border = "red", cex=.9)
+dev.off()
 
 ```
 
