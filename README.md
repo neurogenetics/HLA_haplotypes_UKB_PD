@@ -19,7 +19,8 @@ Here we check:
 2) Correlation between HLA haplotypes and the GWAS hits in the HLA locus region
 
 Results:
-1) Meta-analyzing association results identified DQA1_301 passing Bonferroni correction P=0.00015, OR=0.90, SE=0.0264
+1) Meta-analyzing association results identified DQA1_301 passing Bonferroni correction 
+P=0.00015, OR=0.90, SE=0.0264, this includes => 1529 PD cases, 13404 Proxy PD cases and 347145 controls.
 2) HLA haplotype DQA1_301 is highly correclated with rs504594 (number of A alleles) with >0.95 correlation 
 
 Whats next:
@@ -139,23 +140,19 @@ R
 require(data.table)
 library(dplyr)
 HLA <- fread("ukb41967_tab.txt",fill=TRUE,header=T)
+# set low numbers to missing per recommendations of PDF description HLA UK Biobank
+HLA_v2 <- HLA %>% mutate_all(funs(ifelse(.>0 & .<0.7, NA, .)))
 PD_case <- fread("PD.txt",header=T)
 PD_case$eid <- NULL
 proxy_case <- fread("PD_parent_no_PD.txt",header=F)
 proxy_case$V2 <- NULL
 # COV =>    FID   IID BIRTH_YEAR TOWNSEND AGE_OF_RECRUIT BATCH GENETIC_SEX
 COV <- fread("covariates.txt",header=T)
-samples_to_keep <- fread("Samples_to_keep.txt",header=T)
-samples_to_keep$IID <- NULL
-samples_to_keep$PHENO <- NULL
-samples_to_keep$CNT <- NULL
-samples_to_keep$CNT2 <- NULL
-samples_to_keep$SCORE <- NULL
 # PC's
 PC <- fread("pc.txt",header=T)
 PC$IID <- NULL
 # data sizes:
-dim(HLA)
+dim(HLA_v2)
 # [1] 502505    363 
 # 502505 samples and 362 HLA haplogroups 
 dim(PD_case)
@@ -165,9 +162,6 @@ dim(proxy_case)
 dim(PC)
 # [1] 362788     11
 # 362788 samples and 10 PC's
-dim(samples_to_keep)
-# [1] 362788      1
-# 362788 samples to keep after relatedness filtering 0.125
 dim(COV)
 # [1] 502616      8
 # 502616 samples and known covariates
@@ -177,22 +171,21 @@ dim(COV)
 ### Purpose => process data to get it all in the right and easy to use format
 ```
 # merge and process (!!)
-data <- merge(HLA, samples_to_keep, by.x = "SAMPLEID", by.y = "FID")
+data <- merge(HLA_v2, PC, by.x = "SAMPLEID", by.y = "FID")
 datav2 <- merge(data, COV, by.x = "SAMPLEID", by.y = "FID")
-datav3 <- merge(datav2, PC, by.x = "SAMPLEID", by.y = "FID")
 
 # phenotypes
-PD <- merge(datav3, PD_case, by.x = "SAMPLEID", by.y = "eid")
+PD <- merge(datav2, PD_case, by.x = "SAMPLEID", by.y = "eid")
 mydata2 = select(PD, -381, -382)
 PD <- mydata2
-proxy <- merge(datav3, proxy_case, by.x = "SAMPLEID", by.y = "V1")
+proxy <- merge(datav2, proxy_case, by.x = "SAMPLEID", by.y = "V1")
 # dim(PD)
 [1] 1529 380
 # dim(proxy)
 [1] 13404  380
 
 # controls 
-CONTROL <- anti_join(datav3,PD,by="SAMPLEID")
+CONTROL <- anti_join(datav2,PD,by="SAMPLEID")
 CONTROL_v2 <- anti_join(CONTROL,proxy,by="SAMPLEID")
 dim(CONTROL_v2)
 # [1] 347145  380
