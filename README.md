@@ -5,6 +5,7 @@ Investigation of HLA haplotypes in the UK Biobank vs Parkinson's disease
 ## Data and description download
 ### get actual data 
 Download new data package from UKB
+
 module load ukbb/0.1
 ukbunpack ukb41967.enc SECRET_KEY
 ukbconv ukb41967.enc_ukb csv
