@@ -43,7 +43,7 @@ wget -nd biobank.ndph.ox.ac.uk/showcase/showcase/auxdata/ukb_hla_v2.txt
 ```
 
 ### Resource 1520
-Name:Imputed HLA values example
+Name: Imputed HLA values example
 
 Example of imputed HLA loci information for a single participant.
 
@@ -73,7 +73,7 @@ rm tmpfile
 # ukb41967_tab.txt is the file for later use...
 ```
 
-### get phenotypes and covariates
+### Get phenotypes and covariates
 
 ### PD
 ```
