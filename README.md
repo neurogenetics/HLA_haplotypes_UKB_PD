@@ -3,7 +3,24 @@ Investigation of HLA haplotypes in the UK Biobank vs Parkinson's disease
 
 May 11th 2020
 
-Cornelis, Mary, Mike
+Cornelis, Mary, Andy, Mike
+
+```
+Summary:
+In the most recent PD GWAS (PMID: 31701892) a couple hits are in close proximity of the HLA locus.
+UKbiobank is largest semi-public genetic resource out there and has imputation HLA haplotypes available for all genotypes participants (~500K).
+Here we check:
+1) Association between HLA haplotypes and PD (and PD-proxy status => having a parent with PD) 
+2) Correlation between HLA haplotypes and the GWAS hits in the HLA locus region
+
+Results:
+1) Wait on adding in until meta-analyze results
+2) HLA haplotype DQA1_301 is highly correclated with rs504594 (number of A alleles) with >0.95 correlation 
+
+Whats next:
+Next key is to understand what is special about the DQA1_301 HLA haplotype and how this is somehow protective for PD.
+
+```
 
 ## Data and description download
 ### Get actual data 
