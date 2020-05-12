@@ -1,6 +1,9 @@
 # HLA_haplotypes_UKB_PD
 Investigation of HLA haplotypes in the UK Biobank vs Parkinson's disease
 
+May 11th 2020
+
+Cornelis, Mary, Mike
 
 ## Data and description download
 ### get actual data 
@@ -50,22 +53,24 @@ sed -i 's/"//g' ukb41967_tab.txt
 # replace header, note added SAMPLEID to UKB header
 sed '1d' ukb41967_tab.txt > tmpfile; cat ukb_hla_v2.txt tmpfile > ukb41967_tab.txt
 rm tmpfile
+# ukb41967_tab.txt is the file for later use...
 ```
 
 ### get phenotypes and covariates
 
 ### PD
+PD.txt
 
 ### PD parent
-
+PD_parent_no_PD.txt
 
 ### Covariates => PC, age, townsend
-
-
+pc.txt
+PD_grs.txt
+covariates.txt
 
 ## Load in R and perform analysis
-
-### Load in data
+### Purpose => loading in data to get it all in the right space
 ```
 module load R
 R
@@ -87,9 +92,16 @@ samples_to_keep$SCORE <- NULL
 # PC's
 PC <- fread("pc.txt",header=T)
 PC$IID <- NULL
+# data sizes:
+dim(HLA)
+dim(PD_case)
+dim(proxy_case)
+dim(PC)
+dim(samples_to_keep)
+dim(COV)
 ```
 
-### process data
+## Process data
 ### Purpose => process data to get it all in the right and easy to use format
 ```
 # merge and process (!!)
