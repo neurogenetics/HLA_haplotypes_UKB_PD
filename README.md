@@ -324,8 +324,9 @@ dev.off()
 
 ```
 
-![Image description] https://github.com/neurogenetics/HLA_haplotypes_UKB_PD/blob/master/HLA_forest_UKB.pdf
-
+<p align="center">
+  <img width="300" height="300" src="HLA_forest_UKB.png">
+</p>
 
 
 ## Get HLA frequencies
