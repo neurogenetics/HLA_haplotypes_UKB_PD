@@ -111,11 +111,21 @@ PC <- fread("pc.txt",header=T)
 PC$IID <- NULL
 # data sizes:
 dim(HLA)
+# [1] 502505    363 
+# 502505 samples and 362 HLA haplogroups 
 dim(PD_case)
+# [1] 2087 PD cases
 dim(proxy_case)
+# [1] 17987 Proxy cases
 dim(PC)
+# [1] 362788     11
+# 362788 samples and 10 PC's
 dim(samples_to_keep)
+# [1] 362146      1
+# 362146 samples to keep after relatedness filtering 0.125
 dim(COV)
+# [1] 502616      8
+# 502616 samples and known covariates
 ```
 
 ## Process data
