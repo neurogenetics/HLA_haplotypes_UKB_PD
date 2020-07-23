@@ -1,4 +1,4 @@
-# HLA_haplotypes_UKB_PD
+# HLA haplotypes UKBiobank in PD
 Investigation of HLA haplotypes in the UK Biobank vs Parkinson's disease
 
 May 12th 2020
